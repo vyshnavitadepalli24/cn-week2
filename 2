@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <string.h>
+
+void main() {
+    char data[20], stuffed[100] = "";
+    char insertChar;
+    int i, j, pos, n;
+
+    // Input data
+    printf("Enter the data string: ");
+    scanf("%s", data);
+
+    // Input position
+    printf("Enter the position where the character is to be inserted: ");
+    scanf("%d", &pos);
+
+    // Validate position
+    n = strlen(data);
+    if (pos < 1 || pos > n) {
+        printf("Invalid position! Please enter a position between 1 and %d", n);
+        return;
+    }
+
+    // Input character to insert
+    printf("Enter the character to insert: ");
+    scanf(" %c", &insertChar);
+
+    // Start stuffing
+    i = 0;
+    j = 0;
+
+    // Add start flag
+    stuffed[j++] = 'D';
+    stuffed[j++] = 'L';
+    stuffed[j++] = 'E';
+    stuffed[j++] = 'S';
+    stuffed[j++] = 'T';
+    stuffed[j++] = 'X';
+
+    // Process each character in the data
+    for (i = 0; i < n; i++) {
+        // If this is the insertion position
+        if (i == pos - 1) {
+            // Stuff the character to be inserted
+            stuffed[j++] = 'D';
+            stuffed[j++] = 'L';
+            stuffed[j++] = 'E';
+            stuffed[j++] = insertChar;
+            stuffed[j++] = 'D';
+            stuffed[j++] = 'L';
+            stuffed[j++] = 'E';
+        }
+
+        // If the character is DLE, stuff it
+        if (data[i] == 'D' && data[i+1] == 'L' && data[i+2] == 'E') {
+            stuffed[j++] = 'D';
+            stuffed[j++] = 'L';
+            stuffed[j++] = 'E';
+            stuffed[j++] = 'D';
+            stuffed[j++] = 'L';
+            stuffed[j++] = 'E';
+            i += 2; // Skip the 'DLE' characters
+        } else {
+            // Copy the character as is
+            stuffed[j++] = data[i];
+        }
+    }
+
+    // Add end flag
+    stuffed[j++] = 'D';
+    stuffed[j++] = 'L';
+    stuffed[j++] = 'E';
+    stuffed[j++] = 'E';
+    stuffed[j++] = 'T';
+    stuffed[j++] = 'X';
+
+    stuffed[j] = '\0';
+
+    printf("Stuffed Frame:%s", stuffed);
+}
